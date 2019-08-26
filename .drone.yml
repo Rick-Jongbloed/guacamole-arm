@@ -12,8 +12,8 @@ steps:
 - name: clone-google-guacamole-client-server
   image: drone/git
   commands: 
-  - git clone --single-branch -branch staging/1.1.0 https://github.com/apache/guacamole-client
-  - git clone --single-branch -branch staging/1.1.0 https://github.com/apache/guacamole-server
+  - git clone -b 'staging/1.1.0'--single-branch https://github.com/apache/guacamole-client
+  - git clone -b 'staging/1.1.0'--single-branch https://github.com/apache/guacamole-server
 
 # needs to define build profile (i guess, ldap + postgressql)
 - name: build-guacamole-client
