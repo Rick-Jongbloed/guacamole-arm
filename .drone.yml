@@ -1,0 +1,61 @@
+kind: pipeline
+name: guacamole-client-server-arm
+
+platform:
+  os: linux
+  arch: arm
+
+# workspace:
+#   base: /go
+
+steps:
+- name: clone-google-guacamole-client-server
+  image: drone/git
+  commands: 
+  - git clone --single-branch -branch staging/1.1.0 https://github.com/apache/guacamole-client
+  - git clone --single-branch -branch staging/1.1.0 https://github.com/apache/guacamole-server
+
+# needs to define build profile (i guess, ldap + postgressql)
+- name: build-guacamole-client
+  image: maven:3-jdk-8
+  commands:
+  #- cd guacamole-client
+  - mkdir client-dist
+  - mkdir client-build
+  - pwd
+  - guacamole-client/docker-build/bin/build-guacamole.sh client-build/ client-dist/ 
+  - ls -laR client-dist/ 
+
+# this might have to change to something smaller like debian-slim)
+- name: build-guacamole-server
+  image: debian:stable
+  commands:
+  - mkdir server-dist
+  - mkdir server-build
+  - pwd
+  - apt update
+  - apt install -y autoconf automake gcc libcairo2-dev libfreerdp-dev libjpeg62-turbo-dev libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev make
+  - guacamole-server/src/guacd-docker/bin/build-guacamole.sh server-build/ server-dist/
+  - guacamole-server/src/guacd-docker/bin/list-dependencies.sh server-dist/sbin/guacd server-dist/lib/libguac-client-*.so server-dist/lib/freerdp/guac*.so > server-dist/DEPENDENCIES
+  - cat server-dist/DEPENDENCIES
+  - ls -laR server-dist/ 
+
+
+# - name: publish-guacamole-client
+#   image: docker-registry:5000/drone-plugins/kaniko:latest
+#   settings:
+#     registry: docker.artificialcreature.com
+#     repo: apache/guacamole-client
+#     tags: 1.1.0-staging
+#     log: debug
+#     dockerfile: Dockerfile
+
+#     # create dockerfile in this file for the same of something?
+
+# - name: publish-guacamole-server
+#   image: docker-registry:5000/drone-plugins/kaniko:latest
+#   settings:
+#     registry: docker.artificialcreature.com
+#     repo: apache/guacamole-server
+#     tags: 1.1.0-staging
+#     log: debug
