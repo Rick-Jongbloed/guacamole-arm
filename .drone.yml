@@ -23,7 +23,8 @@ steps:
   - mkdir client-dist
   - mkdir client-build
   - pwd
-  - guacamole-client/docker-build/bin/build-guacamole.sh client-build/ client-dist/ 
+  - ls guacamole-client
+  - guacamole-client/guacamole-docker/bin/build-guacamole.sh client-build/ client-dist/ 
   - ls -laR client-dist/ 
 
 # this might have to change to something smaller like debian-slim)
