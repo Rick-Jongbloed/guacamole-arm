@@ -17,7 +17,7 @@ steps:
 
 # needs to define build profile (i guess, ldap + postgressql)
 - name: build-guacamole-client
-  image: maven:3-jdk-8
+  image: arm32v7/maven:3-jdk-8
   commands:
   #- cd guacamole-client
   - mkdir client-dist
