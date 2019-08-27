@@ -14,7 +14,7 @@ steps:
 - name: build-guacamole-client
   image: arm32v7/maven:3-jdk-8
   commands:
-  - mkdir client-dist
+  - mkdir -p client-dist/bin
   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
   - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
   - cp guacamole-client/guacamole-docker/bin/initdb.sh client-dist/bin/initdb.sh
