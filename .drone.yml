@@ -16,7 +16,8 @@ steps:
   commands:
   - mkdir client-dist
   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
-  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/start.sh
+  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
+  - cp guacamole-client/guacamole-docker/bin/initdb.sh client-dist/bin/initdb.sh
 
 - name: publish-guacamole-client
   image: docker-registry:5000/drone-plugins/kaniko:latest

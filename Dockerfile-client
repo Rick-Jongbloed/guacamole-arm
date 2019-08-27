@@ -8,7 +8,7 @@ FROM tomcat:${TOMCAT_VERSION}-${TOMCAT_JRE}
 WORKDIR /opt/guacamole
 
 # Copy artifacts from builder image into this image
-COPY client-dist/ /opt/guacamole/ .
+COPY client-dist/ .
 
 # Start Guacamole under Tomcat, listening on 0.0.0.0:8080
 EXPOSE 8080
