@@ -18,7 +18,7 @@ ARG RUNTIME_DEPENDENCIES="            \
 
 # Copy build artifacts into this stage
 RUN ls -la
-COPY server-dist/ ${PREFIX_DIR} ${PREFIX_DIR}
+COPY server-dist/ ${PREFIX_DIR}
 
 # Bring runtime environment up to date and install runtime dependencies
 RUN apt-get update                                          && \
