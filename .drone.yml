@@ -32,15 +32,7 @@ steps:
   - mkdir server-build
   - pwd
   - apt update
-  - apt search libfreerdp
-  - apt search libcairo2
-  - apt search devlibjpeg62
-  - apt search libjpeg62
-  - apt search libcairo2-devlibjpeg62-turbo-dev
-# gcc-6 g++-6 libcairo2-dev libjpeg-turbo8-dev libpng-dev \
-# libossp-uuid-dev libavcodec-dev libavutil-dev libswscale-dev libfreerdp-dev \
-# libpango1.0-dev libssh2-1-dev libvncserver-dev libssl-dev libvorbis-dev libwebp-dev
-  - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev libcairo2-dev libjpeg62-turbo-dev libavcodec-dev libavutil-dev libswscale-dev libpng-dev
+  - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev libcairo2-dev libjpeg-turbo8-devlibavcodec-dev libavutil-dev libswscale-dev libpng-dev
   - guacamole-server/src/guacd-docker/bin/build-guacamole.sh server-build/ server-dist/
   - guacamole-server/src/guacd-docker/bin/list-dependencies.sh server-dist/sbin/guacd server-dist/lib/libguac-client-*.so server-dist/lib/freerdp/guac*.so > server-dist/DEPENDENCIES
   - cat server-dist/DEPENDENCIES
