@@ -16,16 +16,12 @@ steps:
   - git clone -b 'staging/1.1.0' --single-branch https://github.com/apache/guacamole-server
 
 # needs to define build profile (i guess, ldap + postgressql)
-- name: build-guacamole-client
-  image: arm32v7/maven:3-jdk-8
-  commands:
-  - mkdir client-dist
-  - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
-  - ls -la
-  - ls -la guacamole-client/guacamole-docker/bin
-  - ls -laR client-dist
-  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/start.sh
-  - ls -laR client-dist/ 
+# - name: build-guacamole-client
+#   image: arm32v7/maven:3-jdk-8
+#   commands:
+#   - mkdir client-dist
+#   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
+#   - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/start.sh
 
 # this might have to change to something smaller like debian-slim)
 - name: build-guacamole-server
@@ -35,7 +31,8 @@ steps:
   - mkdir server-build
   - pwd
   - apt update
-  - apt install -y autoconf automake gcc libcairo2-dev libfreerdp-dev libjpeg62-turbo-dev libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev make
+  - apt search libfreerdp
+  - apt install -y autoconf automake gcc make libcairo2-devlibjpeg62-turbo-dev libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev 
   - guacamole-server/src/guacd-docker/bin/build-guacamole.sh server-build/ server-dist/
   - guacamole-server/src/guacd-docker/bin/list-dependencies.sh server-dist/sbin/guacd server-dist/lib/libguac-client-*.so server-dist/lib/freerdp/guac*.so > server-dist/DEPENDENCIES
   - cat server-dist/DEPENDENCIES
