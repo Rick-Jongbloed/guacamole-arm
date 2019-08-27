@@ -31,7 +31,7 @@ steps:
   - apt update
   - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev libcairo2-dev libjpeg-turbo8-dev libavcodec-dev libavutil-dev libswscale-dev libpng-dev
   - mkdir server-dist
-  - guacamole-server/src/guacd-docker/bin/build-guacamole.sh guacamole-server/ $(pwd)/server-dist/
+  - guacamole-server/src/guacd-docker/bin/build-guacd.sh guacamole-server/ $(pwd)/server-dist/
   - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp/guac*.so > $(pwd)/server-dist/DEPENDENCIES
   - cat server-dist/DEPENDENCIES
   - ls -laR server-dist/ 
