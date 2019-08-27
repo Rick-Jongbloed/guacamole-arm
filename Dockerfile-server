@@ -1,0 +1,41 @@
+# Use same Debian as the base for the runtime image
+FROM ubuntu:18.10
+
+ARG PREFIX_DIR=/usr/local/guacamole
+
+# Runtime environment
+ENV LC_ALL=C.UTF-8
+ENV LD_LIBRARY_PATH=${PREFIX_DIR}/lib
+ENV GUACD_LOG_LEVEL=info
+
+ARG RUNTIME_DEPENDENCIES="            \
+        ca-certificates               \
+        ghostscript                   \
+        libfreerdp-plugins-standard   \
+        fonts-liberation              \
+        fonts-dejavu                  \
+        xfonts-terminus"
+
+# Copy build artifacts into this stage
+RUN ls -la
+COPY server-dist/ ${PREFIX_DIR} ${PREFIX_DIR}
+
+# Bring runtime environment up to date and install runtime dependencies
+RUN apt-get update                                          && \
+    apt-get install -y $RUNTIME_DEPENDENCIES                && \
+    apt-get install -y $(cat "${PREFIX_DIR}"/DEPENDENCIES)  && \
+    rm -rf /var/lib/apt/lists/*
+
+# Link FreeRDP plugins into proper path
+RUN ${PREFIX_DIR}/bin/link-freerdp-plugins.sh \
+        ${PREFIX_DIR}/lib/freerdp/guac*.so
+
+# Expose the default listener port
+EXPOSE 4822
+
+# Start guacd, listening on port 0.0.0.0:4822
+#
+# Note the path here MUST correspond to the value specified in the 
+# PREFIX_DIR build argument.
+#
+CMD /usr/local/guacamole/sbin/guacd -b 0.0.0.0 -L $GUACD_LOG_LEVEL -f

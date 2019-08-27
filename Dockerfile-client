@@ -1,0 +1,15 @@
+ARG TOMCAT_VERSION=8.5
+ARG TOMCAT_JRE=jre8
+
+# For the runtime image, we start with the official Tomcat distribution
+FROM tomcat:${TOMCAT_VERSION}-${TOMCAT_JRE}
+
+# This is where the build artifacts go in the runtime image
+WORKDIR /opt/guacamole
+
+# Copy artifacts from builder image into this image
+COPY client-dist/ /opt/guacamole/ .
+
+# Start Guacamole under Tomcat, listening on 0.0.0.0:8080
+EXPOSE 8080
+CMD ["/opt/guacamole/bin/start.sh" ]

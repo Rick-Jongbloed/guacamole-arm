@@ -5,27 +5,34 @@ platform:
   os: linux
   arch: arm
 
-# workspace:
-#   base: /go
-
 steps:
-- name: clone-google-guacamole-client-server
+- name: clone-google-guacamole-client
   image: drone/git
   commands: 
   - git clone -b 'staging/1.1.0' --single-branch https://github.com/apache/guacamole-client
+
+- name: build-guacamole-client
+  image: arm32v7/maven:3-jdk-8
+  commands:
+  - mkdir client-dist
+  - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
+  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/start.sh
+
+- name: publish-guacamole-client
+  image: docker-registry:5000/drone-plugins/kaniko:latest
+  settings:
+    registry: docker.artificialcreature.com
+    repo: apache/guacamole-client
+    tags: 1.1.0-staging
+    log: debug
+    dockerfile: Dockerfile-client
+
+- name: clone-google-guacamole-server
+  image: drone/git
+  commands:
   - git clone -b 'staging/1.1.0' --single-branch https://github.com/apache/guacamole-server
 
-# needs to define build profile (i guess, ldap + postgressql)
-# - name: build-guacamole-client
-#   image: arm32v7/maven:3-jdk-8
-#   commands:
-#   - mkdir client-dist
-#   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
-#   - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/start.sh
-
-# this might have to change to something smaller like debian-slim)
 - name: build-guacamole-server
-  #image: debian:stable
   image: ubuntu:18.10
   commands:
   - apt update
@@ -33,25 +40,12 @@ steps:
   - mkdir server-dist
   - guacamole-server/src/guacd-docker/bin/build-guacd.sh guacamole-server/ $(pwd)/server-dist/
   - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp/guac*.so > $(pwd)/server-dist/DEPENDENCIES
-  - cat server-dist/DEPENDENCIES
-  - ls -laR server-dist/ 
 
-
-# - name: publish-guacamole-client
-#   image: docker-registry:5000/drone-plugins/kaniko:latest
-#   settings:
-#     registry: docker.artificialcreature.com
-#     repo: apache/guacamole-client
-#     tags: 1.1.0-staging
-#     log: debug
-#     dockerfile: Dockerfile
-
-#     # create dockerfile in this file for the same of something?
-
-# - name: publish-guacamole-server
-#   image: docker-registry:5000/drone-plugins/kaniko:latest
-#   settings:
-#     registry: docker.artificialcreature.com
-#     repo: apache/guacamole-server
-#     tags: 1.1.0-staging
-#     log: debug
+- name: publish-guacamole-server
+  image: docker-registry:5000/drone-plugins/kaniko:latest
+  settings:
+    registry: docker.artificialcreature.com
+    repo: apache/guacamole-server
+    tags: 1.1.0-staging
+    log: debug
+    dockerfile: Dockerfile-server
