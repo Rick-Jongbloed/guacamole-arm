@@ -24,8 +24,9 @@ steps:
   settings:
     registry: docker.artificialcreature.com
     repo: apache/guacamole-client
-    tags: 1.1.0-staging
-    log: debug
+    #tags: 1.1.0-staging
+    tags: latest
+    log: info
     dockerfile: Dockerfile-client
 
 - name: clone-google-guacamole-server
@@ -47,6 +48,7 @@ steps:
   settings:
     registry: docker.artificialcreature.com
     repo: apache/guacamole-server
-    tags: 1.1.0-staging
+    #tags: 1.1.0-staging
+    tags: latest
     log: info
     dockerfile: Dockerfile-server
