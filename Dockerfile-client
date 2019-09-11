@@ -7,6 +7,8 @@ FROM arm32v7/tomcat:${TOMCAT_VERSION}-${TOMCAT_JRE}
 # This is where the build artifacts go in the runtime image
 WORKDIR /opt/guacamole
 
+RUN rm -rf /usr/local/tomcat/webapps/ROOT/
+
 # Copy artifacts from builder image into this image
 COPY client-dist/ .
 
