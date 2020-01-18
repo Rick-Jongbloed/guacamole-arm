@@ -23,7 +23,7 @@ steps:
 - name: publish-guacamole-client
   image: registry.artificialcreature.com/drone-plugins/kaniko:latest
   settings:
-    registry: docker.artificialcreature.com
+    registry: registry.artificialcreature.com
     repo: apache/guacamole-client
     tags: latest
     log: info
