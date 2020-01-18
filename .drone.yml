@@ -1,4 +1,5 @@
 kind: pipeline
+type: kubernetes
 name: guacamole-client-server-arm
 
 platform:
@@ -20,7 +21,7 @@ steps:
   - cp guacamole-client/guacamole-docker/bin/initdb.sh client-dist/bin/initdb.sh
 
 - name: publish-guacamole-client
-  image: docker-registry.artificialcreature.com:5000/drone-plugins/kaniko:latest
+  image: registry.artificialcreature.com/drone-plugins/kaniko:latest
   settings:
     registry: docker.artificialcreature.com
     repo: apache/guacamole-client
@@ -44,9 +45,9 @@ steps:
   - cp guacamole-server/src/guacd-docker/bin/link-freerdp-plugins.sh server-dist/bin/link-freerdp-plugins.sh
   
 - name: publish-guacamole-server
-  image: docker-registry.artificialcreature.com:5000/drone-plugins/kaniko:latest
+  image: registry.artificialcreature.com/drone-plugins/kaniko:latest
   settings:
-    registry: docker.artificialcreature.com
+    registry: registry.artificialcreature.com
     repo: apache/guacamole-server
     tags: latest
     log: info
