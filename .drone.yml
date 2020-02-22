@@ -18,7 +18,6 @@ steps:
   - apt update
   - apt install -y patch
   - mkdir -p client-dist/bin
-  - patch -?
   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
   - mkdir -p $(pwd)/client-dist/header
   - tar -xzf guacamole-client/extensions/guacamole-auth-header/target/*.tar.gz -C $(pwd)/client-dist/header --wildcards --no-anchored --no-wildcards-match-slash --strip-components=1 *.jar
