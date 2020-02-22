@@ -15,18 +15,17 @@ steps:
 - name: build-guacamole-client
   image: arm32v7/maven:3-jdk-8
   commands:
-  - apk add --no-cache patch
+  - apt update
+  - apt install -y patch
   - mkdir -p client-dist/bin
-  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
-  #- cat client-dist/bin/start.sh
-  #- base64 --help
   - patch -?
-  - echo LS0tIHRlbXAyLnNoCTIwMjAtMDItMjIgMTU6MTM6MDAuNjkwNTkxNzY1ICswMTAwCisrKyB0ZW1wLnNoCTIwMjAtMDItMjIgMTU6MTM6MDEuOTcwMTUwMjQ0ICswMTAwCkBAIC03MTgsNiArNzE4LDEzIEBACiAgICAgc2VkIC1pICJzL2xldmVsPVwiaW5mb1wiL2xldmVsPVwiJExPR0JBQ0tfTEVWRUxcIi8iICRHVUFDQU1PTEVfSE9NRS9sb2diYWNrLnhtbAogZmkKIAorIyBJbnN0YWxsIGhlYWRlciBleHRlbnNpb24gaWYgc3BlY2lmaWVkLgoraWYgWyAtbiAiJEhUVFBfQVVUSF9IRUFERVIiIF07IHRoZW4KKyAgICBzZXRfcHJvcGVydHkgImh0dHBfYXV0aF9oZWFkZXIiICIkSFRUUF9BVVRIX0hFQURFUiIKKyAgICAjIEFkZCByZXF1aXJlZCAuamFyIGZpbGVzIHRvIEdVQUNBTU9MRV9FWFQKKyAgICBsbiAtcyAvb3B0L2d1YWNhbW9sZS9oZWFkZXIvZ3VhY2Ftb2xlLWF1dGgtKi5qYXIgICAiJEdVQUNBTU9MRV9FWFQiCitmaQorCiAjCiAjIEZpbmFsbHkgc3RhcnQgR3VhY2Ftb2xlICh1bmRlciBUb21jYXQpCiAjCg== | base64 -d | patch --verbose client-dist/bin/start.sh
-  - cat client-dist/bin/start.sh
   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
   - mkdir -p $(pwd)/client-dist/header
   - tar -xzf guacamole-client/extensions/guacamole-auth-header/target/*.tar.gz -C $(pwd)/client-dist/header --wildcards --no-anchored --no-wildcards-match-slash --strip-components=1 *.jar
+  - echo LS0tIHRlbXAyLnNoCTIwMjAtMDItMjIgMTU6MTM6MDAuNjkwNTkxNzY1ICswMTAwCisrKyB0ZW1wLnNoCTIwMjAtMDItMjIgMTU6MTM6MDEuOTcwMTUwMjQ0ICswMTAwCkBAIC03MTgsNiArNzE4LDEzIEBACiAgICAgc2VkIC1pICJzL2xldmVsPVwiaW5mb1wiL2xldmVsPVwiJExPR0JBQ0tfTEVWRUxcIi8iICRHVUFDQU1PTEVfSE9NRS9sb2diYWNrLnhtbAogZmkKIAorIyBJbnN0YWxsIGhlYWRlciBleHRlbnNpb24gaWYgc3BlY2lmaWVkLgoraWYgWyAtbiAiJEhUVFBfQVVUSF9IRUFERVIiIF07IHRoZW4KKyAgICBzZXRfcHJvcGVydHkgImh0dHBfYXV0aF9oZWFkZXIiICIkSFRUUF9BVVRIX0hFQURFUiIKKyAgICAjIEFkZCByZXF1aXJlZCAuamFyIGZpbGVzIHRvIEdVQUNBTU9MRV9FWFQKKyAgICBsbiAtcyAvb3B0L2d1YWNhbW9sZS9oZWFkZXIvZ3VhY2Ftb2xlLWF1dGgtKi5qYXIgICAiJEdVQUNBTU9MRV9FWFQiCitmaQorCiAjCiAjIEZpbmFsbHkgc3RhcnQgR3VhY2Ftb2xlICh1bmRlciBUb21jYXQpCiAjCg== | base64 -d | patch --verbose client-dist/bin/start.sh
+  - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
   - cp guacamole-client/guacamole-docker/bin/initdb.sh client-dist/bin/initdb.sh
+  - cat client-dist/bin/start.sh
 
 
 - name: publish-guacamole-client
