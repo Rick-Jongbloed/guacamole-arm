@@ -43,12 +43,12 @@ steps:
   image: arm32v7/ubuntu:18.04
   commands:
   - apt update
-  - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev libcairo2-dev libjpeg-turbo8-dev libavcodec-dev libavutil-dev libswscale-dev libpng-dev libvorbis-dev freerdp2-dev
+  - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev  libcairo2-dev libjpeg-turbo8-dev libavcodec-dev libavutil-dev libswscale-dev libpng-dev libvorbis-dev freerdp2-dev # libfreerdp-dev
   - mkdir server-dist
   - guacamole-server/src/guacd-docker/bin/build-guacd.sh guacamole-server/ $(pwd)/server-dist/
   - ls -laR $(pwd)/server-dist/lib
   - ls -laR $(pwd)/server-dist/sbin
-  - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp/guac*.so > $(pwd)/server-dist/DEPENDENCIES
+  - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp2/guac*.so > $(pwd)/server-dist/DEPENDENCIES
   - cat $(pwd)/server-dist/DEPENDENCIES
   - cp guacamole-server/src/guacd-docker/bin/link-freerdp-plugins.sh server-dist/bin/link-freerdp-plugins.sh
   
