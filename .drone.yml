@@ -15,6 +15,7 @@ steps:
 - name: build-guacamole-client
   image: arm32v7/maven:3-jdk-8
   commands:
+  - apk add --no-cache patch
   - mkdir -p client-dist/bin
   - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
   #- cat client-dist/bin/start.sh
