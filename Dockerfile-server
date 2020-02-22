@@ -26,7 +26,7 @@ RUN apt-get update                                          && \
 
 # Link FreeRDP plugins into proper path
 RUN ${PREFIX_DIR}/bin/link-freerdp-plugins.sh \
-        ${PREFIX_DIR}/lib/freerdp2/*.so
+        ${PREFIX_DIR}/lib/freerdp2/libguac*.so
 
 # Expose the default listener port
 EXPOSE 4822

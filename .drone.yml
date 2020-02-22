@@ -48,7 +48,7 @@ steps:
   - guacamole-server/src/guacd-docker/bin/build-guacd.sh guacamole-server/ $(pwd)/server-dist/
   - ls -laR $(pwd)/server-dist/lib
   - ls -laR $(pwd)/server-dist/sbin
-  - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp2/*.so > $(pwd)/server-dist/DEPENDENCIES
+  - guacamole-server/src/guacd-docker/bin/list-dependencies.sh $(pwd)/server-dist/sbin/guacd server-dist/lib/libguac-client-*.so $(pwd)/server-dist/lib/freerdp2/libguac*.so > $(pwd)/server-dist/DEPENDENCIES
   - cat $(pwd)/server-dist/DEPENDENCIES
   - cp guacamole-server/src/guacd-docker/bin/link-freerdp-plugins.sh server-dist/bin/link-freerdp-plugins.sh
   
