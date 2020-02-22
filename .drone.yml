@@ -37,7 +37,7 @@ steps:
   - git clone -b 'staging/1.2.0' --single-branch https://github.com/apache/guacamole-server
 
 - name: build-guacamole-server
-  image: arm32v7/ubuntu:19.10
+  image: arm32v7/ubuntu:18.04
   commands:
   - apt update
   - apt install -y autoconf automake gcc make libossp-uuid-dev libpango1.0-dev libpulse-dev libssh2-1-dev libssl-dev libtelnet-dev libtool libvncserver-dev libwebsockets-dev libwebp-dev libfreerdp-dev libcairo2-dev libjpeg-turbo8-dev libavcodec-dev libavutil-dev libswscale-dev libpng-dev
