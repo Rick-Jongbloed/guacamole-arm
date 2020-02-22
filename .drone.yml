@@ -17,6 +17,10 @@ steps:
   commands:
   - mkdir -p client-dist/bin
   - guacamole-client/guacamole-docker/bin/build-guacamole.sh guacamole-client/ $(pwd)/client-dist/
+  - mkdir -p $(pwd)/client-dist/header
+  - ls -lRa guacamole-client/extensions
+  - tar -xzf guacamole-client/extensions/guacamole-auth-header/target/*.tar.gz -C $(pwd)/client-dist/header --wildcards --no-anchored --no-wildcards-match-slash --strip-components=1 *.jar
+  - ls -lRa $(pwd)/client-dist
   - cp guacamole-client/guacamole-docker/bin/start.sh client-dist/bin/start.sh
   - cp guacamole-client/guacamole-docker/bin/initdb.sh client-dist/bin/initdb.sh
 
